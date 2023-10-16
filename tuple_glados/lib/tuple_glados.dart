@@ -1,4 +1,4 @@
-import 'package:glados/glados.dart';
+import 'package:flutter_glados/flutter_glados.dart';
 import 'package:tuple/tuple.dart';
 
 extension GeneratorTuples on Any {
