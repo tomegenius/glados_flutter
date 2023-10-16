@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:meta/meta.dart';
@@ -128,7 +129,7 @@ class Glados<T> {
     /// Explores the input space for inputs that break the property. This works
     /// by gradually increasing the size. Returns the first value where the
     /// property is broken or null if no value was found.
-    Future<Shrinkable<T>?> explorePhase() async {
+    FutureOr<Shrinkable<T>?> explorePhase() async {
       var count = 0;
       var size = explore.initialSize;
 
@@ -146,7 +147,7 @@ class Glados<T> {
     }
 
     /// Shrinks the given value repeatedly. Returns the shrunk input.
-    Future<T> shrinkPhase(Shrinkable<T> initialErrorInducingInput) async {
+    FutureOr<T> shrinkPhase(Shrinkable<T> initialErrorInducingInput) async {
       var input = initialErrorInducingInput;
 
       outer:
@@ -167,6 +168,83 @@ class Glados<T> {
       '$description (testing ${explore.numRuns} '
       '${explore.numRuns == 1 ? 'input' : 'inputs'})',
       () async {
+        final errorInducingInput = await explorePhase();
+        if (errorInducingInput == null) return;
+
+        final shrunkInput = await shrinkPhase(errorInducingInput);
+        print('Tested ${stats.exploreCounter} '
+            '${stats.exploreCounter == 1 ? 'input' : 'inputs'}, shrunk '
+            '${stats.shrinkCounter} ${stats.shrinkCounter == 1 ? 'time' : 'times'}.'
+            '\nFailing for input: $shrunkInput');
+        final output = body(shrunkInput); // This should fail the test again.
+
+        throw PropertyTestNotDeterministic(shrunkInput, output);
+      },
+      testOn: testOn,
+      timeout: timeout,
+      skip: skip,
+      tags: tags,
+      onPlatform: onPlatform,
+      retry: retry,
+    );
+  }
+
+  /// Executes the given body with a bunch of parameters, trying to break it.
+  @isTest
+  void testWidgets(
+    String description,
+    Tester<T> body, {
+    String? testOn,
+    test_package.Timeout? timeout,
+    dynamic skip,
+    dynamic tags,
+    Map<String, dynamic>? onPlatform,
+    int? retry,
+  }) {
+    final stats = Statistics();
+
+    /// Explores the input space for inputs that break the property. This works
+    /// by gradually increasing the size. Returns the first value where the
+    /// property is broken or null if no value was found.
+    FutureOr<Shrinkable<T>?> explorePhase() async {
+      var count = 0;
+      var size = explore.initialSize;
+
+      while (count < explore.numRuns) {
+        stats.exploreCounter++;
+        final input = generator(explore.random, size.ceil());
+        if (!await succeeds(body, input.value)) {
+          return input;
+        }
+
+        count++;
+        size += explore.speed;
+      }
+      return null;
+    }
+
+    /// Shrinks the given value repeatedly. Returns the shrunk input.
+    FutureOr<T> shrinkPhase(Shrinkable<T> initialErrorInducingInput) async {
+      var input = initialErrorInducingInput;
+
+      outer:
+      while (true) {
+        for (final shrunkInput in input.shrink()) {
+          stats.shrinkCounter++;
+          if (!await succeeds(body, shrunkInput.value)) {
+            input = shrunkInput;
+            continue outer;
+          }
+        }
+        break;
+      }
+      return input.value;
+    }
+
+    testWidgets(
+      '$description (testing ${explore.numRuns} '
+      '${explore.numRuns == 1 ? 'input' : 'inputs'})',
+      (tester) async {
         final errorInducingInput = await explorePhase();
         if (errorInducingInput == null) return;
 

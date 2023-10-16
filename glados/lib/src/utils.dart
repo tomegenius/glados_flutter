@@ -47,7 +47,7 @@ extension RandomUtils on Random {
 
 /// Runs the [tester] with the [input]. Catches thrown errors and instead
 /// returns a [bool] indicating whether the tester ran through successfully.
-Future<bool> succeeds<T>(Tester<T> tester, T input) async {
+FutureOr<bool> succeeds<T>(Tester<T> tester, T input) async {
   try {
     await tester(input);
     return true;
