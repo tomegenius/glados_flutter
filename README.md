@@ -2,7 +2,7 @@ Fork of https://github.com/MarcelGarus/glados with added support for testing Flu
 
 This package specifically adds the ability to call Glados<T>().testWidgets().
 
-For example:
+For instance:
 ```
  Glados3<String, int, String>(
     any.letter,
