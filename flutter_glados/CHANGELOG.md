@@ -1,3 +1,15 @@
+## 1.1.12
+
+- Documentation
+
+## 1.1.11
+
+- Documentation
+
+## 1.1.10
+
+- Documentation
+
 ## 1.1.9
 
 - Bug fixes

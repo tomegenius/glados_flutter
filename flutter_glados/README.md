@@ -1,6 +1,6 @@
 Fork of https://github.com/MarcelGarus/glados with added support for testing Flutter widgets.
 
-This package specifically adds the ability to call Glados<T>().testWidgets().
+This package specifically adds the ability to call `Glados<T>().testWidgets()`.
 
 For instance:
 ```
@@ -31,6 +31,3 @@ For instance:
 2. $ flutter pub get (needs flutter_test from sdk)
 3. $ cd flutter_glados/example
 4. $ flutter test
-
-## Get it
-[pub.dev](https://pub.dev/packages/flutter_glados)
