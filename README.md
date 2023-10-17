@@ -1,11 +1,24 @@
-# Welcome to the Glados repository!
+Fork of https://github.com/MarcelGarus/glados with added Flutter Widget testing support.
 
-This repository contains the `glados` core package, a property-based testing framework for Dart.
-For a general introduction, check out the [pub.dev page](https://pub.dev/packages/glados).
+1. Add dependencies with $ flutter pub get (needs flutter_test from sdk)
+2. Go in the example directory and run $ flutter test
 
-It also contains several glados-based packages for testing with types of third-party packages.
-If you create generators for third-party libraries, but you're unsure whether you want to maintain it, don't hesitate to file a PR; I can take care of publishing it, and the community can more easily find and improve it.
+This package specifically adds the ability to call Glados<T>().testWidgets().
 
-Currently, this repo contains the following packages for third-party libraries:
+For example:
+`
+ Glados3<String, int, String>(
+    any.letter,
+    any.int,
+    any.any.letterOrDigits,
+  ).testWidgets('initial messages always sorted by timestamp',
+      (tester, s, n, s2) async {
+    
+    // Build some widgets with random values
 
-- `tuple_glados`
+    await tester.pumpAndSettle();
+
+    expect(); // Check something
+
+  });
+  `
