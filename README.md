@@ -1,4 +1,4 @@
-Fork of https://github.com/MarcelGarus/glados with added Flutter Widget testing support.
+Fork of https://github.com/MarcelGarus/glados with added support for testing Flutter widgets.
 
 1. Add dependencies with $ flutter pub get (needs flutter_test from sdk)
 2. Go in the example directory and run $ flutter test
