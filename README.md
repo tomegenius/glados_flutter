@@ -20,8 +20,16 @@ For example:
   });
 ```
 
-# Try it
+
+# Example
+
+## See it
+[example_test.dart](leest-dev/glados_flutter/blob/main/flutter_glados/example/test/example_test.dart)
+
+## Try it
 1. $ cd flutter_glados
 2. $ flutter pub get (needs flutter_test from sdk)
 3. $ cd flutter_glados/example
 4. $ flutter test
+
+
