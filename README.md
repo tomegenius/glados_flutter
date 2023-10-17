@@ -6,7 +6,7 @@ Fork of https://github.com/MarcelGarus/glados with added Flutter Widget testing 
 This package specifically adds the ability to call Glados<T>().testWidgets().
 
 For example:
-{
+```
  Glados3<String, int, String>(
     any.letter,
     any.int,
@@ -21,4 +21,4 @@ For example:
     expect(); // Check something
 
   });
-}
+```
