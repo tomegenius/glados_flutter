@@ -1,8 +1,5 @@
 Fork of https://github.com/MarcelGarus/glados with added support for testing Flutter widgets.
 
-1. Add dependencies with $ flutter pub get (needs flutter_test from sdk)
-2. Go in the example directory and run $ flutter test
-
 This package specifically adds the ability to call Glados<T>().testWidgets().
 
 For example:
@@ -22,3 +19,9 @@ For example:
 
   });
 ```
+
+# Self-documenting example
+1. $ cd flutter glados
+1. $ flutter pub get (needs flutter_test from sdk)
+2. cd flutter_glados/example
+2. run $ flutter test
