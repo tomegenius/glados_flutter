@@ -22,6 +22,6 @@ For example:
 
 # Try it
 1. $ cd flutter_glados
-1. $ flutter pub get (needs flutter_test from sdk)
-2. cd flutter_glados/example
-2. run $ flutter test
+2. $ flutter pub get (needs flutter_test from sdk)
+3. $ cd flutter_glados/example
+4. $ flutter test
