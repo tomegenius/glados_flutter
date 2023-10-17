@@ -20,7 +20,7 @@ For example:
   });
 ```
 
-# Self-documenting example
+# Try it
 1. $ cd flutter glados
 1. $ flutter pub get (needs flutter_test from sdk)
 2. cd flutter_glados/example
