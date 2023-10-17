@@ -6,12 +6,12 @@ Fork of https://github.com/MarcelGarus/glados with added Flutter Widget testing 
 This package specifically adds the ability to call Glados<T>().testWidgets().
 
 For example:
-`
+{
  Glados3<String, int, String>(
     any.letter,
     any.int,
     any.any.letterOrDigits,
-  ).testWidgets('initial messages always sorted by timestamp',
+  ).testWidgets('test explanation',
       (tester, s, n, s2) async {
     
     // Build some widgets with random values
@@ -21,4 +21,4 @@ For example:
     expect(); // Check something
 
   });
-  `
+}
