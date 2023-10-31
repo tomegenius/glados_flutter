@@ -1,3 +1,11 @@
+## 1.1.14
+
+- Added maybe generator on Nullable. eg maybe(any.digits) => String? to more closely model flutter objects.
+
+## 1.1.13
+
+- Added support for combiners up to combine20
+
 ## 1.1.12
 
 - Documentation

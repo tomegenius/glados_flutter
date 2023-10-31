@@ -11,6 +11,17 @@ extension NullAny on Any {
   /// A generator that only generates [null].
   // ignore: prefer_void_to_null
   Generator<core.Null> get null_ => always(null);
+
+  /// A generator that  of a given type or [null].
+  Generator<T?> maybe<T>(Generator<T> item) {
+    return (random, size) {
+      if (random.nextBool()) {
+        return item(random, size);
+      } else {
+        return always(null)(random, size);
+      }
+    };
+  }
 }
 
 extension BoolAny on Any {
