@@ -1,6 +1,6 @@
 name: flutter_glados
 description: "A simple testing framework that tries to break your properties. With Flutter support."
-version: 1.1.14
+version: 1.1.15
 
 repository: https://github.com/MarcelGarus/glados
 

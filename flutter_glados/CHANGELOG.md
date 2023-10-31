@@ -1,3 +1,11 @@
+## 1.1.16
+
+- Bug fixes
+
+## 1.1.15
+
+- Fixed type annotation
+
 ## 1.1.14
 
 - Added maybe generator on Nullable. eg maybe(any.digits) => String? to more closely model flutter objects.

@@ -14,13 +14,8 @@ extension NullAny on Any {
 
   /// A generator that  of a given type or [null].
   Generator<T?> maybe<T>(Generator<T> item) {
-    return (random, size) {
-      if (random.nextBool()) {
-        return item(random, size);
-      } else {
-        return always(null)(random, size);
-      }
-    };
+    return combine2(
+        bool, item, (core.bool hasValue, T value) => hasValue ? value : null);
   }
 }
 
