@@ -246,39 +246,6 @@ class ShrinkableList<T> implements Shrinkable<core.List<T>> {
 }
 
 extension SetAyns on Any {
-  /// A generator that returns [Set]s with a `length` that is between [min] and
-  /// [max].
-  @core.Deprecated('This generator is deprecated and will be removed in 2.0.0.'
-      "It's not possible to reliably generate sets with a given length. For "
-      'example, any.setWithLengthInRange(3, 10, any.bool) is impossible.')
-  // Generator<core.Set<T>> setWithLengthInRange<T>(
-  //   core.int? min,
-  //   core.int? max,
-  //   Generator<T> item,
-  // ) {
-  //   final actualMin = min ?? 0;
-  //   assert(actualMin >= 0);
-  //   return (random, size) {
-  //     final length = random.nextIntInRange(
-  //       actualMin,
-  //       math.max(max ?? size, actualMin + 1),
-  //     );
-  //     // TODO(marcelgarus): Make sure the same item is not added twice.
-  //     return ShrinkableSet(
-  //       <Shrinkable<T>>{for (var i = 0; i < length; i++) item(random, size)},
-  //       actualMin,
-  //     );
-  //   };
-  // }
-
-  // /// A generator that returns [Set]s with the given `length`.
-  // @core.Deprecated('This generator is deprecated and will be removed in 2.0.0.'
-  //     "It's not possible to reliably generate sets with a given length. For "
-  //     'example, any.setWithLength(3, any.bool) is impossible.')
-  // Generator<core.Set<T>> setWithLength<T>(core.int length, Generator<T> item) {
-  //   return setWithLengthInRange(length, length + 1, item);
-  // }
-
   // /// A generator that returns [Set]s that are not empty.
   Generator<core.Set<T>> nonEmptySet<T>(Generator<T> item) {
     return any.nonEmptyList(item).map((list) => list.toSet());
@@ -290,6 +257,7 @@ extension SetAyns on Any {
   }
 }
 
+// Deprecated:
 // class ShrinkableSet<T> implements Shrinkable<core.Set<T>> {
 //   ShrinkableSet(this.items, core.int? minLength) : minLength = minLength ?? 0;
 

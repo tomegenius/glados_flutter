@@ -1,3 +1,7 @@
+## 1.1.17
+
+- Fixed any.set implementation with a wrapper on any.list
+
 ## 1.1.16
 
 - Bug fixes
