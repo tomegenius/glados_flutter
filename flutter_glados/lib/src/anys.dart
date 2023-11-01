@@ -251,79 +251,73 @@ extension SetAyns on Any {
   @core.Deprecated('This generator is deprecated and will be removed in 2.0.0.'
       "It's not possible to reliably generate sets with a given length. For "
       'example, any.setWithLengthInRange(3, 10, any.bool) is impossible.')
-  Generator<core.Set<T>> setWithLengthInRange<T>(
-    core.int? min,
-    core.int? max,
-    Generator<T> item,
-  ) {
-    final actualMin = min ?? 0;
-    assert(actualMin >= 0);
-    return (random, size) {
-      final length = random.nextIntInRange(
-        actualMin,
-        math.max(max ?? size, actualMin + 1),
-      );
-      // TODO(marcelgarus): Make sure the same item is not added twice.
-      return ShrinkableSet(
-        <Shrinkable<T>>{for (var i = 0; i < length; i++) item(random, size)},
-        actualMin,
-      );
-    };
-  }
+  // Generator<core.Set<T>> setWithLengthInRange<T>(
+  //   core.int? min,
+  //   core.int? max,
+  //   Generator<T> item,
+  // ) {
+  //   final actualMin = min ?? 0;
+  //   assert(actualMin >= 0);
+  //   return (random, size) {
+  //     final length = random.nextIntInRange(
+  //       actualMin,
+  //       math.max(max ?? size, actualMin + 1),
+  //     );
+  //     // TODO(marcelgarus): Make sure the same item is not added twice.
+  //     return ShrinkableSet(
+  //       <Shrinkable<T>>{for (var i = 0; i < length; i++) item(random, size)},
+  //       actualMin,
+  //     );
+  //   };
+  // }
 
-  /// A generator that returns [Set]s with the given `length`.
-  @core.Deprecated('This generator is deprecated and will be removed in 2.0.0.'
-      "It's not possible to reliably generate sets with a given length. For "
-      'example, any.setWithLength(3, any.bool) is impossible.')
-  Generator<core.Set<T>> setWithLength<T>(core.int length, Generator<T> item) {
-    return setWithLengthInRange(length, length + 1, item);
-  }
+  // /// A generator that returns [Set]s with the given `length`.
+  // @core.Deprecated('This generator is deprecated and will be removed in 2.0.0.'
+  //     "It's not possible to reliably generate sets with a given length. For "
+  //     'example, any.setWithLength(3, any.bool) is impossible.')
+  // Generator<core.Set<T>> setWithLength<T>(core.int length, Generator<T> item) {
+  //   return setWithLengthInRange(length, length + 1, item);
+  // }
 
-  /// A generator that returns [Set]s that are not empty.
+  // /// A generator that returns [Set]s that are not empty.
   Generator<core.Set<T>> nonEmptySet<T>(Generator<T> item) {
-    // This works, because we know that the `item` will generate at
-    // least one distinct item.
-    // ignore: deprecated_member_use_from_same_package
-    return setWithLengthInRange(1, null, item);
+    return any.nonEmptyList(item).map((list) => list.toSet());
   }
 
   /// A generator that returns [Set]s.
   Generator<core.Set<T>> set<T>(Generator<T> item) {
-    // This works, because we don't care about how many _distinct_ items the
-    // `item` generates.
-    // ignore: deprecated_member_use_from_same_package
-    return setWithLengthInRange(0, null, item);
+    return any.list(item).map((list) => list.toSet());
   }
 }
 
-class ShrinkableSet<T> implements Shrinkable<core.Set<T>> {
-  ShrinkableSet(this.items, core.int? minLength) : minLength = minLength ?? 0;
+// class ShrinkableSet<T> implements Shrinkable<core.Set<T>> {
+//   ShrinkableSet(this.items, core.int? minLength) : minLength = minLength ?? 0;
 
-  final core.Set<Shrinkable<T>> items;
-  final core.int minLength;
+//   final core.Set<Shrinkable<T>> items;
+//   final core.int minLength;
 
-  @core.override
-  core.Set<T> get value => items.map((shrinkable) => shrinkable.value).toSet();
+//   @core.override
+//   core.Set<T> get value => items.map((shrinkable) => shrinkable.value).toSet();
 
-  @core.override
-  core.Iterable<Shrinkable<core.Set<T>>> shrink() sync* {
-    for (var i = 0; i < items.length; i++) {
-      for (final item in items) {
-        for (final shrunk in item.shrink()) {
-          final newSet = core.Set.of(items)
-            ..remove({item})
-            ..add(shrunk);
-          if (newSet.length >= minLength) {
-            yield ShrinkableSet(newSet, minLength);
-          }
-        }
-      }
-    }
-  }
+//   @core.override
+//   core.Iterable<Shrinkable<core.Set<T>>> shrink() sync* {
+//     for (var i = 0; i < items.length; i++) {
+//       for (final item in items) {
+//         for (final shrunk in item.shrink()) {
+//           final newSet = core.Set.of(items)
+//             ..remove({item})
+//             ..add(shrunk);
+//           if (newSet.length >= minLength) {
+//             yield ShrinkableSet(newSet, minLength);
+//           }
+//         }
+//       }
+//     }
+//   }
 
-  @core.override
-  core.String toString() => 'ShrinkableSet<$T>($items, minLength: $minLength)';
-}
+//   @core.override
+//   core.String toString() => 'ShrinkableSet<$T>($items, minLength: $minLength)';
+// }
 
 extension DateTimeAnys on Any {
   /// A generator that returns [DateTime]s.
