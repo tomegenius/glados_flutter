@@ -1,3 +1,7 @@
+## 1.1.18
+
+- Upgraded dependencies.
+ 
 ## 1.1.17
 
 - Fixed any.set implementation with a wrapper on any.list
